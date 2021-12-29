@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
-
+from django.db.models.fields import related
 
 
 
@@ -9,15 +8,17 @@ from django.contrib.auth.models import User
 
 
 class Mesage(models.Model):
-    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="senderr")
-    receiver = models.ForeignKey(User, on_delete=models.CASCADE)
-    date_message = models.DateTimeField(auto_now_add=True)
-    text = models.TextField(verbose_name='Message')
+    title = models.CharField(max_length=100,null=True)
+    note = models.TextField(null=True,blank=True)
+    creator = models.ForeignKey(User, on_delete=models.DO_NOTHING,related_name="creator",null=True)
+    create_date = models.DateTimeField( auto_now_add=True, auto_now=False,null=True)
+    update_date = models.DateTimeField(auto_now_add=False, auto_now=True,null=True)
+    viewers = models.ManyToManyField(User, related_name="viewers",null=True)
     seen = models.BooleanField(default=False)
+    
 
 
-    def __str__(self) -> str:
-        return  'Message from ' + self.sender.first_name + ' for ' + self.receiver.first_name
+    
 
 
     

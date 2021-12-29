@@ -1,9 +1,11 @@
 
 from django.urls import path
-from .views import  send_mesage
+from .views import  delete, create,update
 
 
 urlpatterns = [
-    path('send/', send_mesage),
+    path('del/<id>', delete),
+    path('crt/',create),
+    path('update/<int:id>',update)
    
 ]
